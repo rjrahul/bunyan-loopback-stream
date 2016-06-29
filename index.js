@@ -12,11 +12,6 @@ var Writable = stream.Writable;
  * @constructor
  */
 function LogStream(options) {
-
-    if (!(this instanceof LogStream)) {
-        return new LogStream(options);
-    }
-
     this.model = options.model || false;
 
     if (!this.model) {
@@ -44,7 +39,7 @@ LogStream.prototype._write = function (chunk, enc, cb) {
         return cb();
     }
 
-    var newLogEntry = new this.model.create(JSON.parse(chunk.toString()), function (err) {
+    this.model.create(JSON.parse(chunk.toString()), function (err) {
         return cb(err);
     });
 };
